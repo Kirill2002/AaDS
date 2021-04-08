@@ -43,6 +43,13 @@ private:
 	Node<T>* first;
 };
 
+template<typename T>
+List<T>::List()
+{
+	count = 0;
+	first = nullptr;
+}
+
 
 int main()
 {
