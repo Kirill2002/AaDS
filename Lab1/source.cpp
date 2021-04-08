@@ -29,7 +29,7 @@ template<typename T>
 class SortedList
 {
 public:
-	SortedList(bool asc_order = 0);
+	SortedList(bool asc_order = 1);
 	~SortedList();
 	bool isFull();
 	bool isEmpty();
