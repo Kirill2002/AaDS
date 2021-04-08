@@ -71,6 +71,19 @@ bool List<T>::isEmpty()
 	return m_count == 0;
 }
 
+template<typename T>
+bool List<T>::isFull()
+{
+	
+	Node<T>* tmp;
+	tmp = new Node<T>;
+	if(tmp == nullptr) return 1;
+
+	delete tmp;
+	return 0;
+}
+
+
 
 
 int main()
