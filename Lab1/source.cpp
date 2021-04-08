@@ -26,11 +26,11 @@ Node<T>::Node(T data, Node<T>* next)
 }
 
 template<typename T>
-class List
+class SortedList
 {
 public:
-	List();
-	~List();
+	SortedList(bool asc_order = 0);
+	~SortedList();
 	bool isFull();
 	bool isEmpty();
 	void makeEmpty();
@@ -40,18 +40,20 @@ public:
 	int size();
 private:
 	int m_count;
+	bool m_asc_order;
 	Node<T>* m_first;
 };
 
 template<typename T>
-List<T>::List()
+SortedList<T>::SortedList(bool asc_order)
 {
 	m_count = 0;
 	m_first = nullptr;
+	m_asc_order = asc_order;
 }
 
 template<typename T>
-List<T>::~List()
+SortedList<T>::~SortedList()
 {
 	Node<T>* tmp;
 	while(m_first != nullptr)
@@ -66,13 +68,13 @@ List<T>::~List()
 }
 
 template<typename T>
-bool List<T>::isEmpty()
+bool SortedList<T>::isEmpty()
 {
 	return m_count == 0;
 }
 
 template<typename T>
-bool List<T>::isFull()
+bool SortedList<T>::isFull()
 {
 	
 	Node<T>* tmp;
@@ -81,6 +83,13 @@ bool List<T>::isFull()
 
 	delete tmp;
 	return 0;
+}
+
+template<typename T>
+void SortedList<T>::addItem(T item)
+{
+	
+	
 }
 
 
