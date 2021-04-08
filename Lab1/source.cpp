@@ -65,6 +65,13 @@ List<T>::~List()
 
 }
 
+template<typename T>
+bool List<T>::isEmpty()
+{
+	return m_count == 0;
+}
+
+
 
 int main()
 {
