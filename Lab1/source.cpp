@@ -8,13 +8,23 @@ struct Node
 	Node<T>* m_next;
 
 	Node();
-	Node(T data, Node<T> next = nullptr);
-}
+	Node(T data, Node<T>* next = nullptr);
+};
 
-Node::Node()
+template<typename T>
+Node<T>::Node()
 {
 	m_next = nullptr;
 }
+
+
+template<typename T>
+Node<T>::Node(T data, Node<T>* next)
+{
+	m_data = data;
+	m_next = next;
+}
+
 
 int main()
 {
