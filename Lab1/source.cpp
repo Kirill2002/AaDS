@@ -11,6 +11,11 @@ struct Node
 	Node(T data, Node<T> next = nullptr);
 }
 
+Node::Node()
+{
+	m_next = nullptr;
+}
+
 int main()
 {
 	
