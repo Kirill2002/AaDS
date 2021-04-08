@@ -25,6 +25,24 @@ Node<T>::Node(T data, Node<T>* next)
 	m_next = next;
 }
 
+template<typename T>
+class List
+{
+public:
+	List();
+	~List();
+	bool isFull();
+	bool isEmpty();
+	void makeEmpty();
+	void addItem(T item);
+	int deleteItem(T item);
+	bool search(T item);
+	int size();
+private:
+	int count;
+	Node<T>* first;
+};
+
 
 int main()
 {
