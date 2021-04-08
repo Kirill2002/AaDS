@@ -39,15 +39,30 @@ public:
 	bool search(T item);
 	int size();
 private:
-	int count;
-	Node<T>* first;
+	int m_count;
+	Node<T>* m_first;
 };
 
 template<typename T>
 List<T>::List()
 {
-	count = 0;
-	first = nullptr;
+	m_count = 0;
+	m_first = nullptr;
+}
+
+template<typename T>
+List<T>::~List()
+{
+	Node<T>* tmp;
+	while(m_first != nullptr)
+	{
+		tmp = m_first;
+		m_first = m_first->m_next;
+		delete tmp;
+	}
+
+	m_count = 0;
+
 }
 
 
