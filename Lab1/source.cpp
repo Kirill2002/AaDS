@@ -99,13 +99,14 @@ void SortedList<T>::addItem(T item)
 		{
 			if(m_asc_order)
 			{
-				while(tmp->m_next->m_data < item && tmp->m_next != nullptr) tmp = tmp->m_next;
+				while(tmp->m_next != nullptr && tmp->m_next->m_data < item) tmp = tmp->m_next;
 			}else
 			{
-				while(tmp->m_next->m_data > item && tmp->m_next != nullptr) tmp = tmp->m_next;
+				while(tmp->m_next != nullptr && tmp->m_next->m_data > item) tmp = tmp->m_next;
 			}
-
-			tmp->next = new Node<T>(item, tmp->next);
+			
+			tmp->m_next = new Node<T>(item, tmp->m_next);
+			
 		}
 
 		++m_count;
@@ -124,9 +125,9 @@ void SortedList<T>::PrintList()
 	Node<T>* tmp = m_first;
 	do
 	{
-		cout << tmp->item << ' ';
-		tmp = tmp->next;
-	}while(tmp->next != nullptr);
+		cout << tmp->m_data << ' ';
+		tmp = tmp->m_next;
+	}while(tmp != nullptr);
 	cout << '\n';
 }
 
@@ -135,7 +136,12 @@ void SortedList<T>::PrintList()
 
 int main()
 {
-	
+	SortedList<int> list;
+	list.addItem(3);
+	list.addItem(8);
+	list.addItem(4);
+	list.addItem(6);
+	list.PrintList();
 
 	return 0;
 }
