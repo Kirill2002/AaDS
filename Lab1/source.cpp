@@ -89,7 +89,7 @@ bool SortedList<T>::isFull()
 template<typename T>
 void SortedList<T>::addItem(T item)
 {
-	Node<T> tmp = m_first;
+	Node<T>* tmp = m_first;
 	if(m_count == 0)
 	{
 		m_first = new Node<T>(item, nullptr);
@@ -105,6 +105,8 @@ void SortedList<T>::addItem(T item)
 
 		tmp->next = new Node<T>(item, tmp->next);
 	}
+
+	++m_count;
 	
 }
 
