@@ -182,6 +182,12 @@ bool SortedList<T>::search(T item)
 	return 0;	
 }
 
+template<typename T>
+int SortedList<T>::size()
+{
+	return m_count;	
+}
+
 
 
 
@@ -210,6 +216,7 @@ int main()
 	list.addItem(4);
 	list.addItem(6);
 	cout << list.search(0) << ' ' << list.search(3) << ' ' << list.search(8) << ' ' << list.search(6) << '\n';
+	cout << list.size() << '\n';
 	list.PrintList();
 
 	list.deleteItem(4);
@@ -223,6 +230,7 @@ int main()
 	list.deleteItem(3);
 
 	cout << list.search(0) << ' ' << list.search(3) << ' ' << list.search(8) << ' ' << list.search(6) << '\n';
+	cout << list.size() << '\n';
 	list.PrintList();
 	
 
