@@ -38,6 +38,7 @@ public:
 	int deleteItem(T item);
 	bool search(T item);
 	int size();
+	void PrintList();
 private:
 	int m_count;
 	bool m_asc_order;
@@ -105,6 +106,19 @@ void SortedList<T>::addItem(T item)
 		tmp->next = new Node<T>(item, tmp->next);
 	}
 	
+}
+
+template<typename T>
+void SortedList<T>::PrintList()
+{
+	if(m_count == 0) return;
+	Node<T>* tmp = m_first;
+	do
+	{
+		cout << tmp->item << ' ';
+		tmp = tmp->next;
+	}while(tmp->next != nullptr);
+	cout << '\n';
 }
 
 
