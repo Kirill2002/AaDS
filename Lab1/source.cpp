@@ -168,6 +168,22 @@ bool SortedList<T>::deleteItem(T item)
 
 }
 
+template<typename T>
+bool SortedList<T>::search(T item)
+{
+	if(m_count == 0) return 0;
+	Node<T>* tmp = m_first;
+	do
+	{
+		if(tmp->m_data == item) return 1;
+		tmp = tmp->m_next;
+	}while(tmp != nullptr);
+	
+	return 0;	
+}
+
+
+
 
 template<typename T>
 void SortedList<T>::PrintList()
@@ -193,6 +209,7 @@ int main()
 	list.addItem(8);
 	list.addItem(4);
 	list.addItem(6);
+	cout << list.search(0) << ' ' << list.search(3) << ' ' << list.search(8) << ' ' << list.search(6) << '\n';
 	list.PrintList();
 
 	list.deleteItem(4);
@@ -205,6 +222,7 @@ int main()
 	list.deleteItem(6);
 	list.deleteItem(3);
 
+	cout << list.search(0) << ' ' << list.search(3) << ' ' << list.search(8) << ' ' << list.search(6) << '\n';
 	list.PrintList();
 	
 
