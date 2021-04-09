@@ -99,13 +99,28 @@ void SortedList<T>::addItem(T item)
 		{
 			if(m_asc_order)
 			{
-				while(tmp->m_next != nullptr && tmp->m_next->m_data < item) tmp = tmp->m_next;
+				if(tmp->m_data >= item)
+				{
+					m_first = new Node<T>(item, m_first);
+				}else
+				{
+					while(tmp->m_next != nullptr && tmp->m_next->m_data < item) tmp = tmp->m_next;
+					tmp->m_next = new Node<T>(item, tmp->m_next);
+				}
+				
 			}else
 			{
-				while(tmp->m_next != nullptr && tmp->m_next->m_data > item) tmp = tmp->m_next;
+				if(tmp->m_data <= item)
+				{
+					m_first = new Node<T>(item, m_first);
+				}else
+				{
+					while(tmp->m_next != nullptr && tmp->m_next->m_data > item) tmp = tmp->m_next;
+					tmp->m_next = new Node<T>(item, tmp->m_next);
+				}
 			}
 			
-			tmp->m_next = new Node<T>(item, tmp->m_next);
+			
 			
 		}
 
