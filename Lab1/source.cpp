@@ -35,7 +35,7 @@ public:
 	bool isEmpty();
 	void makeEmpty();
 	void addItem(T item);
-	int deleteItem(T item);
+	bool deleteItem(T item);
 	bool search(T item);
 	int size();
 	void PrintList();
@@ -134,6 +134,34 @@ void SortedList<T>::addItem(T item)
 }
 
 template<typename T>
+bool SortedList<T>::deleteItem(T item)
+{
+	if(m_count == 0) return 0;
+	Node<T>* tmp = m_first;
+
+	if(m_asc_order)
+	{
+		while(tmp->m_next != nullptr && tmp->m_next->m_data < item) tmp = tmp->m_next; 
+	}else
+	{
+		while(tmp->m_next != nullptr && tmp->m_next->m_data > item) tmp = tmp->m_next; 
+	}
+
+	if(tmp->m_next->m_data == item)
+	{
+		Node<T>* temp = tmp->m_next;
+		tmp->m_next = temp->m_next;
+		delete temp;
+		--m_count;
+		return 1;
+	}
+
+	return 0;
+
+}
+
+
+template<typename T>
 void SortedList<T>::PrintList()
 {
 	if(m_count == 0) return;
@@ -156,6 +184,7 @@ int main()
 	list.addItem(8);
 	list.addItem(4);
 	list.addItem(6);
+	list.deleteItem(4);
 	list.PrintList();
 
 	return 0;
