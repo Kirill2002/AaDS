@@ -188,6 +188,20 @@ int SortedList<T>::size()
 	return m_count;	
 }
 
+template<typename T>
+void SortedList<T>::makeEmpty()
+{
+	Node<T>* tmp;
+	while(m_first != nullptr)
+	{
+		tmp = m_first;
+		m_first = m_first->m_next;
+		delete tmp;
+	}
+
+	m_count = 0;
+}
+
 
 
 
