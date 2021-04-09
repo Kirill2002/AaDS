@@ -137,6 +137,14 @@ template<typename T>
 bool SortedList<T>::deleteItem(T item)
 {
 	if(m_count == 0) return 0;
+	if(m_first->m_data == item)
+	{
+		Node<T>* tmp = m_first;
+		m_first = m_first->m_next;
+		delete tmp;
+		--m_count;
+		return 1;
+	}
 	Node<T>* tmp = m_first;
 
 	if(m_asc_order)
@@ -180,12 +188,25 @@ void SortedList<T>::PrintList()
 int main()
 {
 	SortedList<int> list;
+
 	list.addItem(3);
 	list.addItem(8);
 	list.addItem(4);
 	list.addItem(6);
-	list.deleteItem(4);
 	list.PrintList();
+
+	list.deleteItem(4);
+	list.deleteItem(5);
+	list.deleteItem(3);
+
+	list.PrintList();
+
+	list.deleteItem(8);
+	list.deleteItem(6);
+	list.deleteItem(3);
+
+	list.PrintList();
+	
 
 	return 0;
 }
