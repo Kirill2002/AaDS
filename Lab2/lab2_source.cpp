@@ -34,7 +34,7 @@ public:
 	static void fix_height(BBST<T>* p);
 	static BBST<T>* right_rotation(BBST<T>* p);
 	static BBST<T>* left_rotation(BBST<T>* p);
-	
+	static BBST<T>* balance(BBST<T>* p);
 };
 
 template<typename T>
@@ -78,6 +78,26 @@ BBST<T>* BBST<T>::left_rotation(BBST<T>* p)
 	fix_height(q);
 	return q;
 }
+
+template<typename T>
+BBST<T>* BBST<T>::balance(BBST<T>* p)
+{
+	fix_height(p);
+	if(balance_factor(p) == 2)
+	{
+		if(balance_factor(p->right) < 0)
+			p->right = right_rotation(p->right);
+		return left_rotation(p);
+	}
+	if(balance_factor(p) == -2)
+	{
+		if(balance_factor(p->left) > 0)
+			p->left = left_rotation(p->left);
+		return right_rotation(p);
+	}
+	return p;
+}
+
 
 int main()
 {
