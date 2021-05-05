@@ -27,6 +27,8 @@ public:
 	BBST* SymetricalBBST();
 	T FatherNode(T k);
 	int CommonAncestor(T a, T b);
+
+
 };
 
 template<typename T>
@@ -39,6 +41,14 @@ template<typename T>
 int balance_factor(BBST<T>* p)
 {
 	return height(p->right) - height(p->left);
+}
+
+template<typename T>
+void fix_height(BBST<T>* p)
+{
+	int hl = height(p->left);
+	int hr = height(p->right);
+	p->height = max(hl, hr) + 1;
 }
 
 int main()
