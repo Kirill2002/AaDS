@@ -32,7 +32,9 @@ public:
 	static int check_height(BBST<T>* p);
 	static int balance_factor(BBST<T>* p);
 	static void fix_height(BBST<T>* p);
-
+	static BBST<T>* right_rotation(BBST<T>* p);
+	static BBST<T>* left_rotation(BBST<T>* p);
+	
 };
 
 template<typename T>
@@ -54,6 +56,18 @@ void BBST<T>::fix_height(BBST<T>* p)
 	int hr = check_height(p->right);
 	p->height = max(hl, hr) + 1;
 }
+
+template<typename T>
+BBST<T>* BBST<T>::right_rotation(BBST<T>* p)
+{
+	BBST<T>* q = p->left;
+	p->left = q->right;
+	q->right = p;
+	fix_height(p);
+	fix_height(q);
+	return q;
+}
+
 
 int main()
 {
