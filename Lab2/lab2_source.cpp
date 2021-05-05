@@ -29,6 +29,10 @@ public:
 	int CommonAncestor(T a, T b);
 
 
+	friend int height(BBST<T>* p);
+	friend int balance_factor(BBST<T>* p);
+	friend void fix_height(BBST<T>* p);
+
 };
 
 template<typename T>
