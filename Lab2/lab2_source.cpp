@@ -68,6 +68,16 @@ BBST<T>* BBST<T>::right_rotation(BBST<T>* p)
 	return q;
 }
 
+template<typename T>
+BBST<T>* BBST<T>::left_rotation(BBST<T>* p)
+{
+	BBST<T>* q = p->right;
+	p->right = q->left;
+	q->left = p;
+	fix_height(p);
+	fix_height(q);
+	return q;
+}
 
 int main()
 {
