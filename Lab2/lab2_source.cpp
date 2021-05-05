@@ -29,6 +29,12 @@ public:
 	int CommonAncestor(T a, T b);
 };
 
+template<typename T>
+int height(BBST<T>* p)
+{
+	return p ? p->height : 0;
+}
+
 int main()
 {
 	
