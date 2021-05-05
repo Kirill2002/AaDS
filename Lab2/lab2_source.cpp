@@ -29,29 +29,29 @@ public:
 	int CommonAncestor(T a, T b);
 
 
-	friend int height(BBST<T>* p);
-	friend int balance_factor(BBST<T>* p);
-	friend void fix_height(BBST<T>* p);
+	static int check_height(BBST<T>* p);
+	static int balance_factor(BBST<T>* p);
+	static void fix_height(BBST<T>* p);
 
 };
 
 template<typename T>
-int height(BBST<T>* p)
+int BBST<T>::check_height(BBST<T>* p)
 {
 	return p ? p->height : 0;
 }
 
 template<typename T>
-int balance_factor(BBST<T>* p)
+int BBST<T>::balance_factor(BBST<T>* p)
 {
-	return height(p->right) - height(p->left);
+	return check_height(p->right) - check_height(p->left);
 }
 
 template<typename T>
-void fix_height(BBST<T>* p)
+void BBST<T>::fix_height(BBST<T>* p)
 {
-	int hl = height(p->left);
-	int hr = height(p->right);
+	int hl = check_height(p->left);
+	int hr = check_height(p->right);
 	p->height = max(hl, hr) + 1;
 }
 
