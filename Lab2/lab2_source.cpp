@@ -10,7 +10,7 @@ private:
 	BBST* left;
 	BBST* right;
 public:
-	BBST();
+	BBST(T k);
 	~BBST();
 	
 	void PrintSorted();
