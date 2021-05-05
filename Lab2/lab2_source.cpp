@@ -35,6 +35,12 @@ int height(BBST<T>* p)
 	return p ? p->height : 0;
 }
 
+template<typename T>
+int balance_factor(BBST<T>* p)
+{
+	return height(p->right) - height(p->left);
+}
+
 int main()
 {
 	
