@@ -226,7 +226,6 @@ public:
     void Print();
     BBST<T> DeleteEven();
     bool ContainsBBST(const BBST<T>& a);
-    bool IsBalanced();
     bool EqualsBBST(const BBST<T>& a);
     BBST* SymetricalBBST();
     T FatherNode(T k);
@@ -309,8 +308,15 @@ public:
 
     BBST<T> InsertBBST(const BBST<T>& a)
     {
-
+    	BBST<T> res = CopyBBST();
+    	in_order_insert(a.root, res);
+    	return res;
     }
+
+    // bool IsBalanced()
+    // {
+    // 	return true;
+    // }
 };
 
 template<typename T>
@@ -330,6 +336,14 @@ BBST<T> BBST<T>::DeleteEven()
     return res;
 }
 
+template<typename T>
+void in_order_insert(node<T>* p, BBST<T>& a)
+{
+	if (!p) return;
+    in_order_insert(p->left, a);
+    a.Insert(p->key);
+    in_order_insert(p->right, a);
+}
 
 template<typename T>
 void BBST<T>::Print()
@@ -391,6 +405,14 @@ int main()
     a.Print();
     cout << '\n';
     c.Print();
+
+    BBST<int> d(30);
+    d.Insert(-3);
+    d.Insert(4);
+    BBST<int> e = a.InsertBBST(d);
+    cout << '\n';
+    e.Print();
+
 }
 
 
