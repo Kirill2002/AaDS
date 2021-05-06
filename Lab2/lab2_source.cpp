@@ -167,7 +167,14 @@ void sum_keys(node<T>* p, long long &sum)
     sum_keys(p->right, sum);
 }
 
-
+template<typename T>
+void make_empty(node<T>* p)
+{
+	if(!p) return;
+	make_empty(p->left);
+	make_empty(p->right);
+	delete p;
+}
 
 template<typename T>
 class BBST
@@ -183,7 +190,10 @@ public:
     {
         root = new node<T>(k);
     }
-    // ~BBST();
+    ~BBST()
+    {
+    	make_empty(root);
+    }
 
     void Print();
     BBST<T> DeleteEven();
@@ -197,6 +207,7 @@ public:
     BBST* SymetricalBBST();
     T FatherNode(T k);
     int CommonAncestor(T a, T b);
+
 
 
 
