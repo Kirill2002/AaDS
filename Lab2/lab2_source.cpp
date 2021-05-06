@@ -181,7 +181,6 @@ public:
     // ~BBST();
 
     void Print();
-    int SumKeys();
     void DeleteEven();
     BBST<T>* FindMiddle();
     T FindSecondLargest();
@@ -216,6 +215,13 @@ public:
     {
         int res = 0;
         count_node(root, res);
+        return res;
+    }
+
+    long long SumKeys()
+    {
+        long long res = 0;
+        sum_keys(root, res);
         return res;
     }
 };
@@ -264,6 +270,8 @@ int main()
     a.PrintSorted();
     cout << '\n';
     cout << a.CountNode();
+    cout << '\n';
+    cout << a.SumKeys();
 }
 
 
