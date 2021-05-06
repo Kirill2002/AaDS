@@ -175,6 +175,10 @@ class BBST
 private:
     node<T>* root;
 public:
+	BBST()
+	{
+		root = nullptr;
+	}
     BBST(T k)
     {
         root = new node<T>(k);
@@ -182,7 +186,7 @@ public:
     // ~BBST();
 
     void Print();
-    void DeleteEven();
+    BBST<T> DeleteEven();
     BBST<T>* FindMiddle();
     T FindSecondLargest();
     BBST<T>* CopyBBST();
@@ -232,15 +236,17 @@ void delete_even(node<T>* p, BBST<T>& b)
 {
     if (!p) return;
     if (p->key % 2 == 1) b.Insert(p->key);	
-    sum_keys(p->left, b);
-    sum_keys(p->right, b);
+    delete_even(p->left, b);
+    delete_even(p->right, b);
 }
 
-// template<typename T>
-// void DeleteEven()
-// {
-//     BBST<T> res;
-// }
+template<typename T>
+BBST<T> BBST<T>::DeleteEven()
+{
+    BBST<T> res;
+    delete_even(root, res);
+    return res;
+}
 
 
 template<typename T>
@@ -286,6 +292,9 @@ int main()
     cout << a.CountNode();
     cout << '\n';
     cout << a.SumKeys();
+    cout << '\n';
+    BBST<int> b = a.DeleteEven();
+    b.Print();
 }
 
 
