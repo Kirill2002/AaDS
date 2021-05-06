@@ -150,6 +150,15 @@ void print_in_order_reverse(node<T>* p)
 }
 
 template<typename T>
+void count_node(node<T>* p, int& count)
+{
+    if (!p) return;
+    if (p->left) ++count;
+    count_node(p->left, count);
+    count_node(p->right, count);
+}
+
+template<typename T>
 class BBST
 {
 private:
