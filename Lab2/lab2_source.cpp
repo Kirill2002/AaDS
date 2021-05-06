@@ -171,7 +171,6 @@ public:
     // ~BBST();
 
     void Print();
-    int CountNode();
     int SumKeys();
     void DeleteEven();
     BBST<T>* FindMiddle();
@@ -201,6 +200,13 @@ public:
         print_in_order(root);
         cout << '\n';
         print_in_order_reverse(root);
+    }
+
+    int CountNode()
+    {
+        int res = 0;
+        count_node(root, res);
+        return res;
     }
 };
 
@@ -243,10 +249,11 @@ int main()
     a.Insert(3);
     a.Insert(4);
     a.Insert(6);
-    // a.Remove(4);
     a.Print();
     cout << '\n';
     a.PrintSorted();
+    cout << '\n';
+    cout << a.CountNode();
 }
 
 
