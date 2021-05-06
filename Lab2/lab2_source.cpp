@@ -215,7 +215,11 @@ public:
     T FatherNode(T k);
     int CommonAncestor(T a, T b);
 
-
+    bool IsEmpty()
+    {
+    	if(root == nullptr) return 1;
+    	return 0;
+    }
 
 
     void Insert(T k) {
