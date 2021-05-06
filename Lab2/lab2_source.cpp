@@ -171,9 +171,9 @@ template<typename T>
 void in_order(node<T>* p, vector<T>& order)
 {
     if (!p) return;
-    in_order(p->left);
+    in_order(p->left, order);
     order.push_back(p->key);
-    in_order(p->right);
+    in_order(p->right, order);
 }
 
 template<typename T>
@@ -206,7 +206,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    BBST<T>* FindMiddle();
     T FindSecondLargest();
     BBST<T>* CopyBBST();
     BBST<T>* InsertBBST(const BBST<T>& a);
@@ -248,6 +247,27 @@ public:
         long long res = 0;
         sum_keys(root, res);
         return res;
+    }
+
+    T FindMiddle()
+    {
+    	vector<T> sorted;
+    	in_order(root, sorted);
+    	float mid_val = (sorted[0] + sorted[sorted.size() - 1]) / (float)2;
+
+    	int l = 0, r = sorted.size() - 1;
+    	while(r - l > 1)
+    	{
+    		int mid = (l + r) / 2;
+    		if(sorted[mid] > mid_val)
+    			r = mid;
+    		else 
+    			l = mid;
+    	}
+
+    	if(abs(mid_val - sorted[l]) < abs(mid_val - sorted[r]))
+    		return sorted[l];
+    	return sorted[r]; 
     }
 };
 
@@ -315,6 +335,8 @@ int main()
     cout << '\n';
     BBST<int> b = a.DeleteEven();
     b.Print();
+    cout << '\n';
+    cout << a.FindMiddle();
 }
 
 
