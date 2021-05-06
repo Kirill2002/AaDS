@@ -159,6 +159,16 @@ void count_node(node<T>* p, int& count)
 }
 
 template<typename T>
+void sum_keys(node<T>* p, long long &sum)
+{
+    if (!p) return;
+    if (p->right) sum += p->right->key;
+    sum_keys(p->left, sum);
+    sum_keys(p->right, sum);
+}
+
+
+template<typename T>
 class BBST
 {
 private:
