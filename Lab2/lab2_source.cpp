@@ -203,6 +203,16 @@ void make_empty(node<T>* p)
 	delete p;
 }
 
+template<typename T>
+bool search(node<T>* p, T k)
+{
+	if(!p) return false;
+	if(k > p->key)
+		return search(p->right, k);
+	else if(k < p->key)
+		return search(p->left, k);
+	return true;
+}
 
 template<typename T>
 class BBST
@@ -317,6 +327,11 @@ public:
     {
     	return true;
     }
+
+    bool Search(T key)
+    {
+    	return search(root, key);
+    }
 };
 
 template<typename T>
@@ -412,7 +427,8 @@ int main()
     BBST<int> e = a.InsertBBST(d);
     cout << '\n';
     e.Print();
-
+    cout << '\n';
+    cout << a.Search(6) << ' ' << a.Search(0) << ' ' << a.Search(3) << ' ' << a.Search(4);
 }
 
 
