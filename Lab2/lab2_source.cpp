@@ -139,6 +139,17 @@ void print_in_order(node<T>* p)
 }
 
 template<typename T>
+void print_in_order_reverse(node<T>* p)
+{
+    if (!p) return;
+    
+    print_in_order_reverse(p->right);
+    cout << p->key << ' ';
+    print_in_order_reverse(p->left);
+    
+}
+
+template<typename T>
 class BBST
 {
 private:
