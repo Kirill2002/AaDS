@@ -107,6 +107,29 @@ node<T>* remove_min(node<T>* p)
 }
 
 template<typename T>
+node<T>* node_remove(node<T>* p, T k) 
+{
+    if (!p) return 0;
+    if (k < p->key)
+        p->left = node_remove(p->left, k);
+    else if (k > p->key)
+        p->right = node_remove(p->right, k);
+    else 
+    {
+        node<T>* q = p->left;
+        node<T>* r = p->right;
+        delete p;
+        if (!r) return q;
+        node<T>* min = findmin(r);
+        min->right = removemin(r);
+        min->left = q;
+        return balance(min);
+    }
+    return balance(p);
+}
+
+
+template<typename T>
 class BBST
 {
 private:
