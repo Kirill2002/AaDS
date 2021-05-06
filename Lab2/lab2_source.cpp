@@ -176,6 +176,22 @@ void in_order(node<T>* p, vector<T>& order)
     in_order(p->right, order);
 }
 
+
+template<typename T>
+void node_copy(node<T>* init, node<T>* copy)
+{
+	if(init->left)
+	{
+		copy->left = new node<T>(init->left->key);
+		node_copy(init->left, copy->left);
+	}
+	if(init->right)
+	{
+		copy->right = new node<T>(init->right->key);
+		node_copy(init->right, copy->right);
+	}
+}
+
 template<typename T>
 void make_empty(node<T>* p)
 {
@@ -184,6 +200,7 @@ void make_empty(node<T>* p)
 	make_empty(p->right);
 	delete p;
 }
+
 
 template<typename T>
 class BBST
@@ -206,7 +223,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    BBST<T>* CopyBBST();
     BBST<T>* InsertBBST(const BBST<T>& a);
     bool ContainsBBST(const BBST<T>& a);
     bool IsBalanced();
@@ -279,6 +295,16 @@ public:
     	in_order(root, sorted);
     	return sorted[sorted.size() - 2];
     }
+
+    BBST<T> CopyBBST()
+    {
+    	BBST<T> res = BBST();
+    	if(IsEmpty()) return res;
+
+    	res.root = new node<T>(root->key);
+    	node_copy(root, res.root);
+    	return res;
+    }
 };
 
 template<typename T>
@@ -349,6 +375,16 @@ int main()
     cout << a.FindMiddle();
     cout << '\n';
     cout << a.FindSecondLargest();
+    BBST<int> c = a.CopyBBST();
+    cout << '\n';
+    a.Print();
+    cout << '\n';
+    c.Print();
+    c.Remove(4);
+    cout << '\n';
+    a.Print();
+    cout << '\n';
+    c.Print();
 }
 
 
