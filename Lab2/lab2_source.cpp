@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <map>
 using namespace std;
 
 template<typename T>
@@ -256,6 +257,18 @@ void reflect(node<T>* p)
 }
 
 template<typename T>
+void parents(node<T>* p, map<T, T>& par)
+{
+	if(!p) return;
+	if(p->left) par[p->left->key] = p->key;
+	if(p->right) par[p->right->key] = p->key;
+	parents(p->left, par);
+	parents(p->right, par);
+	
+}
+
+
+template<typename T>
 class BBST
 {
 private:
@@ -276,8 +289,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    BBST* SymetricalBBST();
-    T FatherNode(T k);
     int CommonAncestor(T a, T b);
 
     bool IsEmpty() const
@@ -391,6 +402,21 @@ public:
     	return res;
 
     }
+
+    map<T, T> Parents()
+    {
+    	map<T, T> res;
+    	parents(root, res);
+    	return res;
+    }
+
+	int FatherNode(int k)
+	{
+		if(root->key == k) return k;
+		map<int, int> mp = Parents();
+		if(mp.find(k) == mp.end()) return -10000;
+		return mp[k];
+	}    
 };
 
 template<typename T>
@@ -409,6 +435,10 @@ BBST<T> BBST<T>::DeleteEven()
     delete_even(root, res);
     return res;
 }
+
+
+
+
 
 template<typename T>
 void in_order_insert(node<T>* p, BBST<T>& a)
@@ -487,7 +517,7 @@ int main()
     cout << '\n';
     e.Print();
     cout << '\n';
-    cout << a.ContainsBBST(e);
+    cout << a.ContainsBBST(e) << ' '; 
     cout << e.ContainsBBST(a);
     
     BBST<int> f = e.CopyBBST();
@@ -498,7 +528,11 @@ int main()
     cout << '\n';
     g.Print();
     
-    
+    cout << '\n';
+    // map<int, int> mp = e.Parents();
+    // for(auto el : mp)
+    // 	cout << el.first << ' ' << el.second << '\n';
+    cout << e.FatherNode(4) << ' ' << e.FatherNode(2) << ' ' << e.FatherNode(3);
 }
 
 
