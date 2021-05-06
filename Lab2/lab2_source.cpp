@@ -313,10 +313,10 @@ public:
     	return res;
     }
 
-    // bool IsBalanced()
-    // {
-    // 	return true;
-    // }
+    bool IsBalanced()
+    {
+    	return true;
+    }
 };
 
 template<typename T>
