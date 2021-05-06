@@ -267,6 +267,16 @@ void parents(node<T>* p, map<T, T>& par)
 	
 }
 
+template<typename T>
+void dfs_order(node<T>* p, vector<int> order)
+{
+	if(!p) return;
+	order.push_back(p->key);
+	dfs_order(p->left);
+	dfs_order(p->right);
+
+}
+
 
 template<typename T>
 class BBST
