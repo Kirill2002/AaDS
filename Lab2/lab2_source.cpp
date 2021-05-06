@@ -215,6 +215,18 @@ bool search(node<T>* p, T k)
 }
 
 template<typename T>
+bool contains_bbst(node<T>* p, node<T>* in)
+{
+	vector<T> sorted;
+	in_order(p, sorted);
+	for(int el : sorted)
+	{
+		if(!search(in, el)) return false;
+	}
+	return true;
+}
+
+template<typename T>
 class BBST
 {
 private:
@@ -235,7 +247,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    bool ContainsBBST(const BBST<T>& a);
     bool EqualsBBST(const BBST<T>& a);
     BBST* SymetricalBBST();
     T FatherNode(T k);
@@ -331,6 +342,11 @@ public:
     bool Search(T key)
     {
     	return search(root, key);
+    }
+
+    bool ContainsBBST(const BBST<T>& a)
+    {
+    	return contains_bbst(a.root, root);
     }
 };
 
@@ -428,7 +444,8 @@ int main()
     cout << '\n';
     e.Print();
     cout << '\n';
-    cout << a.Search(6) << ' ' << a.Search(0) << ' ' << a.Search(3) << ' ' << a.Search(4);
+    cout << a.ContainsBBST(e);
+    cout << e.ContainsBBST(a);
 }
 
 
