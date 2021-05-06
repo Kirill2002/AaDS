@@ -247,6 +247,15 @@ bool equals(node<T>* p, node<T>* other)
 }
 
 template<typename T>
+void reflect(node<T>* p)
+{
+	if (!p) return;
+	swap(p->left, p->right);
+    reflect(p->left);
+    reflect(p->right);
+}
+
+template<typename T>
 class BBST
 {
 private:
@@ -374,6 +383,14 @@ public:
     	if(a.root->key == root->key)	return equals(root, a.root);
     	return false;
     }
+
+    BBST<T> SymmetricalBBST()
+    {
+    	BBST<T> res = CopyBBST();
+    	reflect(res.root);
+    	return res;
+
+    }
 };
 
 template<typename T>
@@ -476,6 +493,11 @@ int main()
     BBST<int> f = e.CopyBBST();
     cout << '\n';
     cout << a.EqualsBBST(c) << ' ' << f.EqualsBBST(e);
+
+    BBST<int> g = e.SymmetricalBBST();
+    cout << '\n';
+    g.Print();
+    
     
 }
 
