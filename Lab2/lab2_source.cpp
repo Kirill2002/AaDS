@@ -168,6 +168,15 @@ void sum_keys(node<T>* p, long long &sum)
 }
 
 template<typename T>
+void in_order(node<T>* p, vector<T>& order)
+{
+    if (!p) return;
+    in_order(p->left);
+    order.push_back(p->key);
+    in_order(p->right);
+}
+
+template<typename T>
 void make_empty(node<T>* p)
 {
 	if(!p) return;
