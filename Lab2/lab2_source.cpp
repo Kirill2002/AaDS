@@ -1,105 +1,173 @@
 #include <iostream>
+#include <queue>
 using namespace std;
+
+template<typename T>
+struct node
+{
+    T key;
+    int height;
+    node<T>* left;
+    node<T>* right;
+    node(T k)
+    {
+        key = k;
+        left = right = nullptr;
+        height = 1;
+    }
+};
+
+template<typename T>
+int check_height(node<T>* p)
+{
+    return p ? p->height : 0;
+}
+
+template<typename T>
+int balance_factor(node<T>* p)
+{
+    return check_height(p->right) - check_height(p->left);
+}
+
+template<typename T>
+void fix_height(node<T>* p)
+{
+    int hl = check_height(p->left);
+    int hr = check_height(p->right);
+    p->height = max(hl, hr) + 1;
+}
+
+template<typename T>
+node<T>* right_rotation(node<T>* p)
+{
+    node<T>* q = p->left;
+    p->left = q->right;
+    q->right = p;
+    fix_height(p);
+    fix_height(q);
+    return q;
+}
+
+template<typename T>
+node<T>* left_rotation(node<T>* p)
+{
+    node<T>* q = p->right;
+    p->right = q->left;
+    q->left = p;
+    fix_height(p);
+    fix_height(q);
+    return q;
+}
+
+template<typename T>
+node<T>* balance(node<T>* p)
+{
+    fix_height(p);
+    if (balance_factor(p) == 2)
+    {
+        if (balance_factor(p->right) < 0)
+            p->right = right_rotation(p->right);
+        return left_rotation(p);
+    }
+    if (balance_factor(p) == -2)
+    {
+        if (balance_factor(p->left) > 0)
+            p->left = left_rotation(p->left);
+        return right_rotation(p);
+    }
+    return p;
+}
+
+
+template<typename T>
+node<T>* node_insert(node<T>* p, T k)
+{
+    if (!p) return new node<T>(k);
+    if (k < p->key)
+        p->left = node_insert(p->left, k);
+    else
+        p->right = node_insert(p->right, k);
+
+    return balance(p);
+}
 
 template<typename T>
 class BBST
 {
 private:
-	T key;
-	int height;
-	BBST* left;
-	BBST* right;
+    node<T>* root;
 public:
-	BBST(T k);
-	~BBST();
-	
-	void PrintSorted();
-	int CountNode();
-	int SumKeys();
-	void DeleteEven();
-	BBST* FindMiddle();
-	T FindSecondLargest();
-	BBST* CopyBBST();
-	BBST* InsertBBST(const BBST& a);
-	bool ContainsBBST(const BBST& a);
-	bool IsBalanced();
-	bool EqualsBBST(const BBST& a);
-	BBST* SymetricalBBST();
-	T FatherNode(T k);
-	int CommonAncestor(T a, T b);
+    BBST(T k)
+    {
+        root = new node<T>(k);
+    }
+    // ~BBST();
+
+    void Print();
+    void PrintPreOrder();
+    void PrintSorted();
+    int CountNode();
+    int SumKeys();
+    void DeleteEven();
+    BBST<T>* FindMiddle();
+    T FindSecondLargest();
+    BBST<T>* CopyBBST();
+    BBST<T>* InsertBBST(const BBST<T>& a);
+    bool ContainsBBST(const BBST<T>& a);
+    bool IsBalanced();
+    bool EqualsBBST(const BBST<T>& a);
+    BBST* SymetricalBBST();
+    T FatherNode(T k);
+    int CommonAncestor(T a, T b);
 
 
-	static int check_height(BBST<T>* p);
-	static int balance_factor(BBST<T>* p);
-	static void fix_height(BBST<T>* p);
-	static BBST<T>* right_rotation(BBST<T>* p);
-	static BBST<T>* left_rotation(BBST<T>* p);
-	static BBST<T>* balance(BBST<T>* p);
+
+    void insert(T k) {
+        root = node_insert(root, k);
+    }
+
 };
 
-template<typename T>
-int BBST<T>::check_height(BBST<T>* p)
-{
-	return p ? p->height : 0;
-}
+
+
 
 template<typename T>
-int BBST<T>::balance_factor(BBST<T>* p)
+void BBST<T>::Print()
 {
-	return check_height(p->right) - check_height(p->left);
+    queue<pair<node<T>*, int>> q;
+    q.push({ root, 0 });
+    int cur_h = 0;
+    while (!q.empty())
+    {
+        pair<node<T>*, int> tmp = q.front();
+        q.pop();
+        if (tmp.first != nullptr)
+        {
+            q.push({ tmp.first->left, tmp.second + 1 });
+            q.push({ tmp.first->right, tmp.second + 1 });
+            if (tmp.second > cur_h)
+            {
+                ++cur_h;
+                cout << '\n';
+            }
+            cout << tmp.first->key << ' ';
+        }
+
+    }
+
 }
 
-template<typename T>
-void BBST<T>::fix_height(BBST<T>* p)
-{
-	int hl = check_height(p->left);
-	int hr = check_height(p->right);
-	p->height = max(hl, hr) + 1;
-}
-
-template<typename T>
-BBST<T>* BBST<T>::right_rotation(BBST<T>* p)
-{
-	BBST<T>* q = p->left;
-	p->left = q->right;
-	q->right = p;
-	fix_height(p);
-	fix_height(q);
-	return q;
-}
-
-template<typename T>
-BBST<T>* BBST<T>::left_rotation(BBST<T>* p)
-{
-	BBST<T>* q = p->right;
-	p->right = q->left;
-	q->left = p;
-	fix_height(p);
-	fix_height(q);
-	return q;
-}
-
-template<typename T>
-BBST<T>* BBST<T>::balance(BBST<T>* p)
-{
-	fix_height(p);
-	if(balance_factor(p) == 2)
-	{
-		if(balance_factor(p->right) < 0)
-			p->right = right_rotation(p->right);
-		return left_rotation(p);
-	}
-	if(balance_factor(p) == -2)
-	{
-		if(balance_factor(p->left) > 0)
-			p->left = left_rotation(p->left);
-		return right_rotation(p);
-	}
-	return p;
-}
 
 
 int main()
 {
-	
+    BBST<int> a(5);
+    a.insert(1);
+    a.insert(2);
+    a.insert(3);
+    a.insert(4);
+    a.insert(6);
+    a.Print();
 }
+
+
