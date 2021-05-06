@@ -85,8 +85,10 @@ node<T>* node_insert(node<T>* p, T k)
     if (!p) return new node<T>(k);
     if (k < p->key)
         p->left = node_insert(p->left, k);
-    else
+    else if(k > p->key)
         p->right = node_insert(p->right, k);
+    else
+    	return p;
 
     return balance(p);
 }
@@ -223,7 +225,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    BBST<T>* InsertBBST(const BBST<T>& a);
     bool ContainsBBST(const BBST<T>& a);
     bool IsBalanced();
     bool EqualsBBST(const BBST<T>& a);
@@ -304,6 +305,11 @@ public:
     	res.root = new node<T>(root->key);
     	node_copy(root, res.root);
     	return res;
+    }
+
+    BBST<T> InsertBBST(const BBST<T>& a)
+    {
+
     }
 };
 
