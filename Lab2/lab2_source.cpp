@@ -275,8 +275,8 @@ int dfs_order(node<T>* p, vector<T>& order, map<T, pair<int, int>>& lr)
 	int size = 1;
 	order.push_back(p->key);
 	lr[p->key].first = order.size() - 1;
-	size += dfs_order(p->left);
-	size += dfs_order(p->right);
+	size += dfs_order(p->left, order, lr);
+	size += dfs_order(p->right, order, lr);
 	lr[p->key].second = lr[p->key].first + size;
 	return size;
 }
@@ -303,7 +303,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    int CommonAncestor(T a, T b);
 
     bool IsEmpty() const
     {
@@ -430,7 +429,32 @@ public:
 		map<int, int> mp = Parents();
 		if(mp.find(k) == mp.end()) return -10000;
 		return mp[k];
-	}    
+	}
+
+	T CommonAncestor(T a, T b)
+	{
+		vector<T> order;
+		map<T, pair<int, int>> lr;
+		map<T, T> par;
+		parents(root, par);
+		dfs_order(root, order, lr);
+
+
+		auto IsAncestor {[](T first, T second, map<T, pair<int, int>>& lr)
+			{
+				bool f = (lr[first].first <= lr[second].first && lr[second].second <= lr[first].second);
+				return f;
+			}
+		};
+
+		if(IsAncestor(a, b, lr)) return a;
+		if(IsAncestor(b, a, lr)) return b;
+
+		while(par[a] != a) {
+		    a = par[a];
+		    if(IsAncestor(a, b, lr)) return a;
+		}
+	}
 };
 
 template<typename T>
@@ -547,6 +571,9 @@ int main()
     // for(auto el : mp)
     // 	cout << el.first << ' ' << el.second << '\n';
     cout << e.FatherNode(4) << ' ' << e.FatherNode(2) << ' ' << e.FatherNode(3);
+    cout << '\n';
+    cout << e.CommonAncestor(30, 3) << ' ' << e.CommonAncestor(30, 6) << ' ' << e.CommonAncestor(6, 30);
+    cout << ' ' << e.CommonAncestor(-3, 30);
 }
 
 
