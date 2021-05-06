@@ -168,6 +168,7 @@ void sum_keys(node<T>* p, long long &sum)
 }
 
 
+
 template<typename T>
 class BBST
 {
@@ -226,6 +227,14 @@ public:
     }
 };
 
+template<typename T>
+void delete_even(node<T>* p, BBST<T>& b)
+{
+    if (!p) return;
+    if (p) b.Insert(p->key);	
+    sum_keys(p->left, b);
+    sum_keys(p->right, b);
+}
 
 
 
