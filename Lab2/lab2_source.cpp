@@ -206,7 +206,6 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    T FindSecondLargest();
     BBST<T>* CopyBBST();
     BBST<T>* InsertBBST(const BBST<T>& a);
     bool ContainsBBST(const BBST<T>& a);
@@ -268,6 +267,13 @@ public:
     	if(abs(mid_val - sorted[l]) < abs(mid_val - sorted[r]))
     		return sorted[l];
     	return sorted[r]; 
+    }
+
+    T FindSecondLargest()
+    {
+    	vector<T> sorted;
+    	in_order(root, sorted);
+    	return sorted[sorted.size() - 2];
     }
 };
 
@@ -337,6 +343,8 @@ int main()
     b.Print();
     cout << '\n';
     cout << a.FindMiddle();
+    cout << '\n';
+    cout << a.FindSecondLargest();
 }
 
 
