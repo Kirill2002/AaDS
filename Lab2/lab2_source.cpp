@@ -130,6 +130,15 @@ node<T>* node_remove(node<T>* p, T k)
 
 
 template<typename T>
+void print_in_order(node<T>* p)
+{
+    if (!p) return;
+    print_in_order(p->left);
+    cout << p->key << ' ';
+    print_in_order(p->right);
+}
+
+template<typename T>
 class BBST
 {
 private:
@@ -209,7 +218,7 @@ int main()
     a.Insert(3);
     a.Insert(4);
     a.Insert(6);
-    a.Remove(4);
+    // a.Remove(4);
     a.Print();
 }
 
