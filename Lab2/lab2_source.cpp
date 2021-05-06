@@ -162,8 +162,6 @@ public:
     // ~BBST();
 
     void Print();
-    void PrintPreOrder();
-    void PrintSorted();
     int CountNode();
     int SumKeys();
     void DeleteEven();
@@ -187,6 +185,13 @@ public:
     void Remove(T k)
     {
     	root = node_remove(root, k);
+    }
+
+    void PrintSorted()
+    {
+        print_in_order(root);
+        cout << '\n';
+        print_in_order_reverse(root);
     }
 };
 
@@ -231,6 +236,8 @@ int main()
     a.Insert(6);
     // a.Remove(4);
     a.Print();
+    cout << '\n';
+    a.PrintSorted();
 }
 
 
