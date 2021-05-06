@@ -231,11 +231,16 @@ template<typename T>
 void delete_even(node<T>* p, BBST<T>& b)
 {
     if (!p) return;
-    if (p) b.Insert(p->key);	
+    if (p->key % 2 == 1) b.Insert(p->key);	
     sum_keys(p->left, b);
     sum_keys(p->right, b);
 }
 
+// template<typename T>
+// void DeleteEven()
+// {
+//     BBST<T> res;
+// }
 
 
 template<typename T>
