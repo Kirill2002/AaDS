@@ -92,9 +92,18 @@ node<T>* node_insert(node<T>* p, T k)
 }
 
 template<typename T>
-node<T>* findmin(node<T>* p) 
+node<T>* find_min(node<T>* p) 
 {
-    return p->left ? findmin(p->left) : p;
+    return p->left ? find_min(p->left) : p;
+}
+
+template<typename T>
+node<T>* remove_min(node<T>* p)
+{
+    if (p->left == 0)
+        return p->right;
+    p->left = remove_min(p->left);
+    return balance(p);
 }
 
 template<typename T>
