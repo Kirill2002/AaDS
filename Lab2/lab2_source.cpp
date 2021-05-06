@@ -268,13 +268,17 @@ void parents(node<T>* p, map<T, T>& par)
 }
 
 template<typename T>
-void dfs_order(node<T>* p, vector<int> order)
+int dfs_order(node<T>* p, vector<T>& order, map<T, pair<int, int>>& lr)
 {
-	if(!p) return;
+	if(!p) return 0;
+	
+	int size = 1;
 	order.push_back(p->key);
-	dfs_order(p->left);
-	dfs_order(p->right);
-
+	lr[p->key].first = order.size() - 1;
+	size += dfs_order(p->left);
+	size += dfs_order(p->right);
+	lr[p->key].second = lr[p->key].first + size;
+	return size;
 }
 
 
