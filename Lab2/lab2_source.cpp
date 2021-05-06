@@ -227,6 +227,26 @@ bool contains_bbst(node<T>* p, node<T>* in)
 }
 
 template<typename T>
+bool equals(node<T>* p, node<T>* other)
+{
+	if(p->right != nullptr && other->right != nullptr)
+	{
+		if(p->right->key == other->right->key) return equals(p->right, other->right);
+		return false;
+	}
+	if(p->right != other->right)
+		return false;
+
+	if(p->left != nullptr && other->left != nullptr)
+	{
+		if(p->left->key == other->left->key) return equals(p->right, other->right);
+	}
+	if(p->left != other->left)
+		return false;
+	return true;
+}
+
+template<typename T>
 class BBST
 {
 private:
@@ -247,12 +267,11 @@ public:
 
     void Print();
     BBST<T> DeleteEven();
-    bool EqualsBBST(const BBST<T>& a);
     BBST* SymetricalBBST();
     T FatherNode(T k);
     int CommonAncestor(T a, T b);
 
-    bool IsEmpty()
+    bool IsEmpty() const
     {
     	if(root == nullptr) return 1;
     	return 0;
@@ -347,6 +366,13 @@ public:
     bool ContainsBBST(const BBST<T>& a)
     {
     	return contains_bbst(a.root, root);
+    }
+
+    bool EqualsBBST(const BBST<T>& a)
+    {
+    	if(IsEmpty() && a.IsEmpty()) return true;
+    	if(a.root->key == root->key)	return equals(root, a.root);
+    	return false;
     }
 };
 
@@ -446,6 +472,11 @@ int main()
     cout << '\n';
     cout << a.ContainsBBST(e);
     cout << e.ContainsBBST(a);
+    
+    BBST<int> f = e.CopyBBST();
+    cout << '\n';
+    cout << a.EqualsBBST(c) << ' ' << f.EqualsBBST(e);
+    
 }
 
 
