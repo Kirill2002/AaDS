@@ -120,8 +120,8 @@ node<T>* node_remove(node<T>* p, T k)
         node<T>* r = p->right;
         delete p;
         if (!r) return q;
-        node<T>* min = findmin(r);
-        min->right = removemin(r);
+        node<T>* min = find_min(r);
+        min->right = remove_min(r);
         min->left = q;
         return balance(min);
     }
@@ -160,10 +160,14 @@ public:
 
 
 
-    void insert(T k) {
+    void Insert(T k) {
         root = node_insert(root, k);
     }
 
+    void Remove(T k)
+    {
+    	root = node_remove(root, k);
+    }
 };
 
 
@@ -200,11 +204,12 @@ void BBST<T>::Print()
 int main()
 {
     BBST<int> a(5);
-    a.insert(1);
-    a.insert(2);
-    a.insert(3);
-    a.insert(4);
-    a.insert(6);
+    a.Insert(1);
+    a.Insert(2);
+    a.Insert(3);
+    a.Insert(4);
+    a.Insert(6);
+    a.Remove(4);
     a.Print();
 }
 
