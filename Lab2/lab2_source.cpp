@@ -92,6 +92,12 @@ node<T>* node_insert(node<T>* p, T k)
 }
 
 template<typename T>
+node<T>* findmin(node<T>* p) 
+{
+    return p->left ? findmin(p->left) : p;
+}
+
+template<typename T>
 class BBST
 {
 private:
