@@ -475,7 +475,6 @@ void in_order_print(node<T>* p)
 	in_order_print(p->left);
 	cout << p->data_priority << ": ";
 	p->data.PrintList();
-	cout << '\n';
 	in_order_print(p->right);
 }
 
@@ -508,12 +507,24 @@ public:
 
 
 
-    bool IsEmpty() const
+    bool isEmpty() const
     {
-    	if(root == nullptr) return 1;
-    	return 0;
+    	if(root) return 0;
+    	return 1;
     }
 
+    bool isFull() const
+    {
+    	node<T>* t = new node<T>;
+    	if(t)
+    	{
+    		delete t;
+    		return 0;
+    	}else
+    	{
+    		return 1;
+    	}
+    }
 
     void Enqueue(int k, T item) {
         root = node_insert(root, k, item);
@@ -544,6 +555,7 @@ public:
 
 int main()
 {
+	cout << "Main task:\n";
 	ArrayList<int> a(200);
 	a.addItem(10);
 	a.addItem(4);
@@ -559,7 +571,7 @@ int main()
 	a.printList();
 	cout << '\n';
 
-	
+	cout << "Additional task (V = 18):\n";
 	PriorityQueue<int> b;
 	b.Enqueue(4, 1);
 	b.Enqueue(4, 2);
