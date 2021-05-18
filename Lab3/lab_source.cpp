@@ -398,30 +398,55 @@ node<T>* remove_min(node<T>* p)
 }
 
 template<typename T>
-node<T>* node_remove(node<T>* p, int k, T& item) 
+node<T>* node_remove(node<T>* p, int k, T& item)
 {
-    if (!p) return 0;
-    if (k < p->data_priority)
-        p->left = node_remove(p->left, k, item);
-    else if (k > p->data_priority)
-        p->right = node_remove(p->right, k, item);
-    else 
-    {
-    	item = p->data.popFirst();
-    	if(p->data.size() == 0){
+	if (!p) return 0;
+	if (k < p->data_priority)
+		p->left = node_remove(p->left, k, item);
+	else if (k > p->data_priority)
+		p->right = node_remove(p->right, k, item);
+	else
+	{
+		item = p->data.popFirst();
+		if (p->data.size() == 0) {
+			node<T>* q;
+			node<T>* r;
+			if (p->left)
+			{
+				q = new node<T>(p->left->data_priority);
+				q->data.CopyList(p->left->data);
+				q->left = p->left->left;
+				q->right = p->left->right;
+			}
+			else
+			{
+				q = nullptr;
+			}
 
-    		node<T>* q = p->left;
-	        node<T>* r = p->right;
-	        delete p;
-	        if (!r) return q;
-	        node<T>* min = find_min(r);
-	        min->right = remove_min(r);
-	        min->left = q;
-	        return balance(min);
-    	}
-        
-    }
-    return balance(p);
+			if (p->right)
+			{
+				r = new node<T>(p->right->data_priority);
+				r->data.CopyList(p->right->data);
+				r->left = p->right->left;
+				r->right = p->right->right;
+			}
+			else
+			{
+				r = nullptr;
+			}
+			
+			
+			
+			delete p;
+			if (!r) return q;
+			node<T>* min = find_min(r);
+			min->right = remove_min(r);
+			min->left = q;
+			return balance(min);
+		}
+
+	}
+	return balance(p);
 }
 
 template<typename T>
@@ -501,7 +526,7 @@ public:
     	if(!root) throw -1;
     	int max = find_max(root);
     	T item;
-    	node_remove(root, max, item);
+    	root = node_remove(root, max, item);
     	return item;
 
     }
@@ -542,9 +567,10 @@ int main()
 	b.Enqueue(3, 4);
 	b.Enqueue(4, 5);
 	b.Enqueue(7, 6);
+	b.Enqueue(5, 7);
 	b.Print();
 	cout << '\n';
-	for(int i = 0; i < 6; ++i)
+	for(int i = 0; i < 7; ++i)
 	{
 		cout << b.DequeueMax() << ' ';
 	}
