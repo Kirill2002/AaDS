@@ -432,10 +432,7 @@ public:
 	{
 		root = nullptr;
 	}
-    PriorityQueue(T k)
-    {
-        root = new node<T>(k);
-    }
+
     ~PriorityQueue()
     {
     	make_empty(root);
@@ -450,7 +447,7 @@ public:
     }
 
 
-    void Insert(int k, T item) {
+    void Enqueue(int k, T item) {
         root = node_insert(root, k, item);
     }
 
