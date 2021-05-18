@@ -437,8 +437,8 @@ public:
     }
 
 
-    void Insert(T k) {
-        root = node_insert(root, k);
+    void Insert(int k, T item) {
+        root = node_insert(root, k, item);
     }
 
     void Remove(T k)
