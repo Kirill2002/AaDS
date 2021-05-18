@@ -451,10 +451,7 @@ public:
         root = node_insert(root, k, item);
     }
 
-    // void Remove(T k)
-    // {
-    // 	root = node_remove(root, k);
-    // }
+
 
     T DequeueMax()
     {
@@ -467,15 +464,7 @@ public:
     }
 
 
-    bool IsBalanced()
-    {
-    	return true;
-    }
 
-    bool Search(T data_priority)
-    {
-    	return search(root, data_priority);
-    }
 
     
 };
