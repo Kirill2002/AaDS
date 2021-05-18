@@ -256,13 +256,15 @@ void List<T>::PrintList()
 template<typename T>
 struct node
 {
-    T key;
+    int data_priority;
+    List<T> data;
     int height;
     node<T>* left;
     node<T>* right;
-    node(T k)
+    node(int k)
     {
-        key = k;
+        data_priority = k;
+        data = List<T>();
         left = right = nullptr;
         height = 1;
     }
@@ -334,9 +336,9 @@ template<typename T>
 node<T>* node_insert(node<T>* p, T k)
 {
     if (!p) return new node<T>(k);
-    if (k < p->key)
+    if (k < p->data_priority)
         p->left = node_insert(p->left, k);
-    else if(k > p->key)
+    else if(k > p->data_priority)
         p->right = node_insert(p->right, k);
     else
     	return p;
@@ -363,9 +365,9 @@ template<typename T>
 node<T>* node_remove(node<T>* p, T k) 
 {
     if (!p) return 0;
-    if (k < p->key)
+    if (k < p->data_priority)
         p->left = node_remove(p->left, k);
-    else if (k > p->key)
+    else if (k > p->data_priority)
         p->right = node_remove(p->right, k);
     else 
     {
@@ -395,9 +397,9 @@ template<typename T>
 bool search(node<T>* p, T k)
 {
 	if(!p) return false;
-	if(k > p->key)
+	if(k > p->data_priority)
 		return search(p->right, k);
-	else if(k < p->key)
+	else if(k < p->data_priority)
 		return search(p->left, k);
 	return true;
 }
@@ -446,9 +448,9 @@ public:
     	return true;
     }
 
-    bool Search(T key)
+    bool Search(T data_priority)
     {
-    	return search(root, key);
+    	return search(root, data_priority);
     }
 
     
