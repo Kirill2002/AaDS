@@ -459,10 +459,15 @@ public:
     // 	root = node_remove(root, k);
     // }
 
-    // T DequeueMax()
-    // {
+    T DequeueMax()
+    {
+    	if(!root) throw -1;
+    	int max = find_max(root);
+    	T item;
+    	node_remove(root, max, item);
+    	return item;
 
-    // }
+    }
 
 
     bool IsBalanced()
