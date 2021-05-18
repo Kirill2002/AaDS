@@ -26,6 +26,11 @@ public:
 		return last == -1;
 	}
 
+	bool isFull()
+	{
+		return last == max_length - 1;
+	}
+
 	
 };
 
