@@ -388,6 +388,7 @@ void make_empty(node<T>* p)
 	make_empty(p->left);
 	make_empty(p->right);
 	delete p;
+	p = nullptr;
 }
 
 template<typename T>
