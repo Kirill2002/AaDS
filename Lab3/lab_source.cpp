@@ -72,6 +72,21 @@ public:
 		array[++last] = key;
 
 	}
+
+	void heapSort()
+	{
+		int n = last + 1;
+		for(int i = n / 2; i>= 0; --i)
+		{
+			settleRoot(i, last);
+		}
+
+		for(int r = last - 1; r >= 0; --r)
+		{
+			swap(array[0], array[r + 1]);
+			settleRoot(0, r);
+		}
+	}
 	
 };
 
@@ -88,4 +103,6 @@ int main()
 	a.addItem(7);
 	a.printList();
 	cout << '\n';
+	a.heapSort();
+	a.printList();
 }
