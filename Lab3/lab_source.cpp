@@ -15,7 +15,10 @@ public:
 		array = new T[max];
 		last = -1; 
 	}
-	~ArrayList();
+	~ArrayList()
+	{
+		delete[] array;
+	}
 	
 };
 
