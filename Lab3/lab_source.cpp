@@ -36,6 +36,11 @@ public:
 		for(int i = 0; i <= last; ++i)
 			cout << array[i] << ' ';
 	}
+
+	int size()
+	{
+		return last + 1;
+	}
 	
 };
 
