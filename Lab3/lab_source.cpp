@@ -174,7 +174,7 @@ template<typename T>
 void List<T>::addItem(T item)
 {
 	m_first = new Node<T>(item, m_first);
-
+	++m_count;
 }
 
 
@@ -377,7 +377,7 @@ node<T>* node_remove(node<T>* p, int k, T& item)
     else 
     {
     	item = p->data->popFirst();
-    	if(p->data->m_count == 0){
+    	if(p->data->size() == 0){
 
     		node<T>* q = p->left;
 	        node<T>* r = p->right;
