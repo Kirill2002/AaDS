@@ -344,7 +344,7 @@ node<T>* node_insert(node<T>* p, int k, T item)
         p->right = node_insert(p->right, k, item);
     else
     {
-    	p->data->addItem(item);
+    	p->data.addItem(item);
     	return p;
     }
 
@@ -371,13 +371,13 @@ node<T>* node_remove(node<T>* p, int k, T& item)
 {
     if (!p) return 0;
     if (k < p->data_priority)
-        p->left = node_remove(p->left, k);
+        p->left = node_remove(p->left, k, item);
     else if (k > p->data_priority)
-        p->right = node_remove(p->right, k);
+        p->right = node_remove(p->right, k, item);
     else 
     {
-    	item = p->data->popFirst();
-    	if(p->data->size() == 0){
+    	item = p->data.popFirst();
+    	if(p->data.size() == 0){
 
     		node<T>* q = p->left;
 	        node<T>* r = p->right;
@@ -416,11 +416,11 @@ void in_order_print(node<T>* p)
 {
 	if(!p) return;
 
-	in_order(p->left);
+	in_order_print(p->left);
 	cout << p->data_priority << ": ";
-	p->data->printList();
+	p->data.PrintList();
 	cout << '\n';
-	in_order(p->right);
+	in_order_print(p->right);
 }
 
 // template<typename T>
@@ -501,4 +501,20 @@ int main()
 	cout << '\n';
 	a.heapSort();
 	a.printList();
+	cout << '\n';
+
+	
+	PriorityQueue<int> b;
+	b.Enqueue(4, 1);
+	b.Enqueue(4, 2);
+	b.Enqueue(1, 3);
+	b.Enqueue(3, 4);
+	b.Enqueue(4, 5);
+	b.Enqueue(7, 6);
+	b.Print();
+	cout << '\n';
+	for(int i = 0; i < 6; ++i)
+	{
+		cout << b.DequeueMax() << ' ';
+	}
 }
