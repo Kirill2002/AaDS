@@ -141,6 +141,27 @@ List<T>::List()
 }
 
 template<typename T>
+void List<T>::CopyList(const List& other)
+{
+	
+	makeEmpty();
+	m_count = other.m_count;
+	if (other.m_first)
+	{
+		Node<T>* cur_other = other.m_first;
+		m_first = new Node<T>(cur_other->m_data);
+		Node<T>* cur = m_first;
+		while (cur_other->m_next)
+		{
+			cur_other = cur_other->m_next;
+			cur->m_next = new Node<T>(cur_other->m_data);
+			cur = cur->m_next;
+		}
+	}
+	
+}
+
+template<typename T>
 List<T>::~List()
 {
 	Node<T>* tmp;
