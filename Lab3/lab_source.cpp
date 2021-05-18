@@ -41,6 +41,18 @@ public:
 	{
 		return last + 1;
 	}
+
+	void addItem(T key)
+	{
+		if(isFull())
+		{
+			cout << "List overflow\n";
+			return;
+		}
+
+		array[++last] = key;
+
+	}
 	
 };
 
