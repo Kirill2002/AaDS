@@ -15,10 +15,17 @@ public:
 		array = new T[max];
 		last = -1; 
 	}
+
 	~ArrayList()
 	{
 		delete[] array;
 	}
+
+	bool isEmpty()
+	{
+		return last == -1;
+	}
+
 	
 };
 
