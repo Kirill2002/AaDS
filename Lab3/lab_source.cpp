@@ -118,13 +118,13 @@ template<typename T>
 class List
 {
 public:
-	List(bool asc_order = 1);
+	List();
 	~List();
 	bool isFull();
 	bool isEmpty();
 	void makeEmpty();
 	void addItem(T item);
-	bool deleteItem(T item);
+	T popFirst();
 	bool search(T item);
 	int size();
 	void PrintList();
@@ -134,7 +134,7 @@ private:
 };
 
 template<typename T>
-List<T>::List(bool asc_order)
+List<T>::List()
 {
 	m_count = 0;
 	m_first = nullptr;
@@ -154,6 +154,22 @@ List<T>::~List()
 	m_count = 0;
 
 }
+
+
+
+template<typename T>
+T List<T>::popFirst()
+{
+
+	T tmp = m_first->m_data;
+	Node<T>* next = m_first->m_next;
+	delete m_first;
+	m_first = next;
+	--m_count;
+
+	return tmp;
+}
+
 
 template<typename T>
 bool List<T>::isEmpty()
