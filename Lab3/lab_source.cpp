@@ -367,7 +367,7 @@ node<T>* remove_min(node<T>* p)
 }
 
 template<typename T>
-node<T>* node_remove(node<T>* p, T k) 
+node<T>* node_remove(node<T>* p, int k, T& item) 
 {
     if (!p) return 0;
     if (k < p->data_priority)
@@ -376,17 +376,25 @@ node<T>* node_remove(node<T>* p, T k)
         p->right = node_remove(p->right, k);
     else 
     {
-        node<T>* q = p->left;
-        node<T>* r = p->right;
-        delete p;
-        if (!r) return q;
-        node<T>* min = find_min(r);
-        min->right = remove_min(r);
-        min->left = q;
-        return balance(min);
+    	item = p->data->popFirst();
+    	if(p->data->m_count == 0){
+
+    		node<T>* q = p->left;
+	        node<T>* r = p->right;
+	        delete p;
+	        if (!r) return q;
+	        node<T>* min = find_min(r);
+	        min->right = remove_min(r);
+	        min->left = q;
+	        return balance(min);
+    	}
+        
     }
     return balance(p);
 }
+
+
+
 
 template<typename T>
 void make_empty(node<T>* p)
@@ -441,10 +449,10 @@ public:
         root = node_insert(root, k, item);
     }
 
-    void Remove(T k)
-    {
-    	root = node_remove(root, k);
-    }
+    // void Remove(T k)
+    // {
+    // 	root = node_remove(root, k);
+    // }
 
 
 
