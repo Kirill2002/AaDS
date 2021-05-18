@@ -31,6 +31,11 @@ public:
 		return last == max_length - 1;
 	}
 
+	void printList()
+	{
+		for(int i = 0; i <= last; ++i)
+			cout << array[i] << ' ';
+	}
 	
 };
 
