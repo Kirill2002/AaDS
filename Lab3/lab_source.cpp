@@ -261,10 +261,12 @@ struct node
     int height;
     node<T>* left;
     node<T>* right;
-    node(int k)
+
+    node(int k, T item)
     {
         data_priority = k;
         data = List<T>();
+        data.addItem(item);
         left = right = nullptr;
         height = 1;
     }
@@ -333,15 +335,18 @@ node<T>* balance(node<T>* p)
 
 
 template<typename T>
-node<T>* node_insert(node<T>* p, T k)
+node<T>* node_insert(node<T>* p, int k, T item)
 {
-    if (!p) return new node<T>(k);
+    if (!p) return new node<T>(k, item);
     if (k < p->data_priority)
-        p->left = node_insert(p->left, k);
+        p->left = node_insert(p->left, k, item);
     else if(k > p->data_priority)
-        p->right = node_insert(p->right, k);
+        p->right = node_insert(p->right, k, item);
     else
+    {
+    	p->data->addItem(item);
     	return p;
+    }
 
     return balance(p);
 }
