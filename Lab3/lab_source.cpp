@@ -393,7 +393,12 @@ node<T>* node_remove(node<T>* p, int k, T& item)
     return balance(p);
 }
 
-
+template<typename T>
+int find_max(node<T>* p)
+{
+	if(!p->right) return p->data_priority;
+	return find_max(p->right);
+}
 
 
 template<typename T>
@@ -406,32 +411,32 @@ void make_empty(node<T>* p)
 	p = nullptr;
 }
 
-template<typename T>
-bool search(node<T>* p, T k)
-{
-	if(!p) return false;
-	if(k > p->data_priority)
-		return search(p->right, k);
-	else if(k < p->data_priority)
-		return search(p->left, k);
-	return true;
-}
+// template<typename T>
+// bool search(node<T>* p, int k)
+// {
+// 	if(!p) return false;
+// 	if(k > p->data_priority)
+// 		return search(p->right, k);
+// 	else if(k < p->data_priority)
+// 		return search(p->left, k);
+// 	return true;
+// }
 
 template<typename T>
-class BBST
+class PriorityQueue
 {
 private:
     node<T>* root;
 public:
-	BBST()
+	PriorityQueue()
 	{
 		root = nullptr;
 	}
-    BBST(T k)
+    PriorityQueue(T k)
     {
         root = new node<T>(k);
     }
-    ~BBST()
+    ~PriorityQueue()
     {
     	make_empty(root);
     }
@@ -454,6 +459,10 @@ public:
     // 	root = node_remove(root, k);
     // }
 
+    // T DequeueMax()
+    // {
+
+    // }
 
 
     bool IsBalanced()
