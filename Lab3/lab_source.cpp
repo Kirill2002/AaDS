@@ -475,6 +475,10 @@ public:
 
     }
 
+    void Print()
+    {
+    	in_order_print(root);
+    }
 
 
 
