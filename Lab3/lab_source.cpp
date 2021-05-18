@@ -1,0 +1,589 @@
+#include <iostream>
+using namespace std;
+
+template<typename T>
+class ArrayList
+{
+private:
+	T* array;
+	int last;
+	int max_length;
+
+	void settleRoot(int root, int last)
+	{
+		int child, unsettled = root;
+		while(2 * unsettled + 1 <= last)
+		{
+			if(2 * unsettled + 1 < last &&
+			 array[2 * unsettled + 2] > array[2 * unsettled + 1])
+				child = 2 * unsettled + 2;
+			else 
+				child = 2 * unsettled + 1;
+
+			if(array[unsettled] < array[child])
+			{
+				swap(array[unsettled], array[child]);
+				unsettled = child;
+			}else break;
+		}
+	}
+public:
+	ArrayList(int max = 100)
+	{
+		max_length = max;
+		array = new T[max];
+		last = -1; 
+	}
+
+	~ArrayList()
+	{
+		delete[] array;
+	}
+
+	bool isEmpty()
+	{
+		return last == -1;
+	}
+
+	bool isFull()
+	{
+		return last == max_length - 1;
+	}
+
+	void printList()
+	{
+		for(int i = 0; i <= last; ++i)
+			cout << array[i] << ' ';
+	}
+
+	int size()
+	{
+		return last + 1;
+	}
+
+	void addItem(T key)
+	{
+		if(isFull())
+		{
+			cout << "List overflow\n";
+			return;
+		}
+
+		array[++last] = key;
+
+	}
+
+	void heapSort()
+	{
+		int n = last + 1;
+		for(int i = n / 2; i>= 0; --i)
+		{
+			settleRoot(i, last);
+		}
+
+		for(int r = last - 1; r >= 0; --r)
+		{
+			swap(array[0], array[r + 1]);
+			settleRoot(0, r);
+		}
+	}
+	
+};
+
+template<typename T>
+struct Node
+{
+	T m_data;
+	Node<T>* m_next;
+
+	Node();
+	Node(T data, Node<T>* next = nullptr);
+};
+
+template<typename T>
+Node<T>::Node()
+{
+	m_next = nullptr;
+}
+
+
+template<typename T>
+Node<T>::Node(T data, Node<T>* next)
+{
+	m_data = data;
+	m_next = next;
+}
+
+template<typename T>
+class List
+{
+public:
+	List();
+	~List();
+	void CopyList(const List<T>& other);
+	bool isFull();
+	bool isEmpty();
+	void makeEmpty();
+	void addItem(T item);
+	T popFirst();
+	bool search(T item);
+	int size();
+	void PrintList();
+private:
+	int m_count;
+	Node<T>* m_first;
+};
+
+template<typename T>
+List<T>::List()
+{
+	m_count = 0;
+	m_first = nullptr;
+}
+
+template<typename T>
+void List<T>::CopyList(const List<T>& other)
+{
+	
+	makeEmpty();
+	m_count = other.m_count;
+	if (other.m_first)
+	{
+		Node<T>* cur_other = other.m_first;
+		m_first = new Node<T>(cur_other->m_data);
+		Node<T>* cur = m_first;
+		while (cur_other->m_next)
+		{
+			cur_other = cur_other->m_next;
+			cur->m_next = new Node<T>(cur_other->m_data);
+			cur = cur->m_next;
+		}
+	}
+	
+}
+
+template<typename T>
+List<T>::~List()
+{
+	Node<T>* tmp;
+	while(m_first != nullptr)
+	{
+		tmp = m_first;
+		m_first = m_first->m_next;
+		delete tmp;
+	}
+
+	m_count = 0;
+
+}
+
+
+
+template<typename T>
+T List<T>::popFirst()
+{
+
+	T tmp = m_first->m_data;
+	Node<T>* next = m_first->m_next;
+	delete m_first;
+	m_first = next;
+	--m_count;
+
+	return tmp;
+}
+
+template<typename T>
+void List<T>::addItem(T item)
+{
+	m_first = new Node<T>(item, m_first);
+	++m_count;
+}
+
+
+
+template<typename T>
+bool List<T>::isEmpty()
+{
+	return m_count == 0;
+}
+
+template<typename T>
+bool List<T>::isFull()
+{
+	
+	Node<T>* tmp;
+	tmp = new Node<T>;
+	if(tmp == nullptr) return 1;
+
+	delete tmp;
+	return 0;
+}
+
+
+
+
+
+template<typename T>
+bool List<T>::search(T item)
+{
+	if(m_count == 0) return 0;
+	Node<T>* tmp = m_first;
+	do
+	{
+		if(tmp->m_data == item) return 1;
+		tmp = tmp->m_next;
+	}while(tmp != nullptr);
+	
+	return 0;	
+}
+
+template<typename T>
+int List<T>::size()
+{
+	return m_count;	
+}
+
+template<typename T>
+void List<T>::makeEmpty()
+{
+	Node<T>* tmp;
+	while(m_first != nullptr)
+	{
+		tmp = m_first;
+		m_first = m_first->m_next;
+		delete tmp;
+	}
+
+	m_count = 0;
+}
+
+
+
+
+template<typename T>
+void List<T>::PrintList()
+{
+	if(m_count == 0) return;
+	Node<T>* tmp = m_first;
+	do
+	{
+		cout << tmp->m_data << ' ';
+		tmp = tmp->m_next;
+	}while(tmp != nullptr);
+	cout << '\n';
+}
+
+
+
+template<typename T>
+struct node
+{
+    int data_priority;
+    List<T> data;
+    int height;
+    node<T>* left;
+    node<T>* right;
+
+
+	node(int k = 0)
+	{
+		data_priority = k;
+		data = List<T>();
+		left = right = nullptr;
+		height = 1;
+	}
+
+    node(int k, T item)
+    {
+        data_priority = k;
+        data = List<T>();
+        data.addItem(item);
+        left = right = nullptr;
+        height = 1;
+    }
+};
+
+template<typename T>
+int check_height(node<T>* p)
+{
+    return p ? p->height : 0;
+}
+
+template<typename T>
+int balance_factor(node<T>* p)
+{
+    return check_height(p->right) - check_height(p->left);
+}
+
+template<typename T>
+void fix_height(node<T>* p)
+{
+    int hl = check_height(p->left);
+    int hr = check_height(p->right);
+    p->height = max(hl, hr) + 1;
+}
+
+template<typename T>
+node<T>* right_rotation(node<T>* p)
+{
+    node<T>* q = p->left;
+    p->left = q->right;
+    q->right = p;
+    fix_height(p);
+    fix_height(q);
+    return q;
+}
+
+template<typename T>
+node<T>* left_rotation(node<T>* p)
+{
+    node<T>* q = p->right;
+    p->right = q->left;
+    q->left = p;
+    fix_height(p);
+    fix_height(q);
+    return q;
+}
+
+template<typename T>
+node<T>* balance(node<T>* p)
+{
+    fix_height(p);
+    if (balance_factor(p) == 2)
+    {
+        if (balance_factor(p->right) < 0)
+            p->right = right_rotation(p->right);
+        return left_rotation(p);
+    }
+    if (balance_factor(p) == -2)
+    {
+        if (balance_factor(p->left) > 0)
+            p->left = left_rotation(p->left);
+        return right_rotation(p);
+    }
+    return p;
+}
+
+
+template<typename T>
+node<T>* node_insert(node<T>* p, int k, T item)
+{
+    if (!p) return new node<T>(k, item);
+    if (k < p->data_priority)
+        p->left = node_insert(p->left, k, item);
+    else if(k > p->data_priority)
+        p->right = node_insert(p->right, k, item);
+    else
+    {
+    	p->data.addItem(item);
+    	return p;
+    }
+
+    return balance(p);
+}
+
+template<typename T>
+node<T>* find_min(node<T>* p) 
+{
+    return p->left ? find_min(p->left) : p;
+}
+
+template<typename T>
+node<T>* remove_min(node<T>* p)
+{
+    if (p->left == 0)
+        return p->right;
+    p->left = remove_min(p->left);
+    return balance(p);
+}
+
+template<typename T>
+node<T>* node_remove(node<T>* p, int k, T& item)
+{
+	if (!p) return 0;
+	if (k < p->data_priority)
+		p->left = node_remove(p->left, k, item);
+	else if (k > p->data_priority)
+		p->right = node_remove(p->right, k, item);
+	else
+	{
+		item = p->data.popFirst();
+		if (p->data.size() == 0) {
+			node<T>* q;
+			node<T>* r;
+			if (p->left)
+			{
+				q = new node<T>(p->left->data_priority);
+				q->data.CopyList(p->left->data);
+				q->left = p->left->left;
+				q->right = p->left->right;
+			}
+			else
+			{
+				q = nullptr;
+			}
+
+			if (p->right)
+			{
+				r = new node<T>(p->right->data_priority);
+				r->data.CopyList(p->right->data);
+				r->left = p->right->left;
+				r->right = p->right->right;
+			}
+			else
+			{
+				r = nullptr;
+			}
+			
+			
+			
+			delete p;
+			if (!r) return q;
+			node<T>* min = find_min(r);
+			min->right = remove_min(r);
+			min->left = q;
+			return balance(min);
+		}
+
+	}
+	return balance(p);
+}
+
+template<typename T>
+int find_max(node<T>* p)
+{
+	if(!p->right) return p->data_priority;
+	return find_max(p->right);
+}
+
+
+template<typename T>
+void make_empty(node<T>* p)
+{
+	if(!p) return;
+	make_empty(p->left);
+	make_empty(p->right);
+	delete p;
+	p = nullptr;
+}
+
+template<typename T>
+void in_order_print(node<T>* p)
+{
+	if(!p) return;
+
+	in_order_print(p->left);
+	cout << p->data_priority << ": ";
+	p->data.PrintList();
+	in_order_print(p->right);
+}
+
+// template<typename T>
+// bool search(node<T>* p, int k)
+// {
+// 	if(!p) return false;
+// 	if(k > p->data_priority)
+// 		return search(p->right, k);
+// 	else if(k < p->data_priority)
+// 		return search(p->left, k);
+// 	return true;
+// }
+
+template<typename T>
+class PriorityQueue
+{
+private:
+    node<T>* root;
+public:
+	PriorityQueue()
+	{
+		root = nullptr;
+	}
+
+    ~PriorityQueue()
+    {
+    	make_empty(root);
+    }
+
+
+
+    bool isEmpty() const
+    {
+    	if(root) return 0;
+    	return 1;
+    }
+
+    bool isFull() const
+    {
+    	node<T>* t = new node<T>;
+    	if(t)
+    	{
+    		delete t;
+    		return 0;
+    	}else
+    	{
+    		return 1;
+    	}
+    }
+
+    void Enqueue(int k, T item) {
+        root = node_insert(root, k, item);
+    }
+
+
+
+    T DequeueMax()
+    {
+    	if(!root) throw -1;
+    	int max = find_max(root);
+    	T item;
+    	root = node_remove(root, max, item);
+    	return item;
+
+    }
+
+    void Print()
+    {
+    	in_order_print(root);
+    }
+
+
+
+    
+};
+
+
+int main()
+{
+	cout << "Main task:\n";
+	ArrayList<int> a(200);
+	a.addItem(10);
+	a.addItem(4);
+	a.addItem(8);
+	a.addItem(9);
+	a.addItem(15);
+	a.addItem(35);
+	a.addItem(5);
+	a.addItem(7);
+	a.printList();
+	cout << '\n';
+	a.heapSort();
+	a.printList();
+	cout << '\n';
+
+	cout << "Additional task (V = 18):\n";
+	PriorityQueue<int> b;
+	b.Enqueue(4, 1);
+	b.Enqueue(4, 2);
+	b.Enqueue(1, 3);
+	b.Enqueue(3, 4);
+	b.Enqueue(4, 5);
+	b.Enqueue(7, 6);
+	b.Enqueue(5, 7);
+	b.Print();
+	cout << '\n';
+	for(int i = 0; i < 7; ++i)
+	{
+		cout << b.DequeueMax() << ' ';
+	}
+}
