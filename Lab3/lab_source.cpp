@@ -120,6 +120,7 @@ class List
 public:
 	List();
 	~List();
+	void CopyList(const List<T>& other);
 	bool isFull();
 	bool isEmpty();
 	void makeEmpty();
@@ -141,7 +142,7 @@ List<T>::List()
 }
 
 template<typename T>
-void List<T>::CopyList(const List& other)
+void List<T>::CopyList(const List<T>& other)
 {
 	
 	makeEmpty();
@@ -282,6 +283,15 @@ struct node
     int height;
     node<T>* left;
     node<T>* right;
+
+
+	node(int k = 0)
+	{
+		data_priority = k;
+		data = List<T>();
+		left = right = nullptr;
+		height = 1;
+	}
 
     node(int k, T item)
     {
