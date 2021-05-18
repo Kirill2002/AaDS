@@ -411,6 +411,18 @@ void make_empty(node<T>* p)
 	p = nullptr;
 }
 
+template<typename T>
+void in_order_print(node<T>* p)
+{
+	if(!p) return;
+
+	in_order(p->left);
+	cout << p->data_priority << ": ";
+	p->data->printList();
+	cout << '\n';
+	in_order(p->right);
+}
+
 // template<typename T>
 // bool search(node<T>* p, int k)
 // {
