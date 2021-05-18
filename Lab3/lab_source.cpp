@@ -170,6 +170,14 @@ T List<T>::popFirst()
 	return tmp;
 }
 
+template<typename T>
+void List<T>::addItem(T item)
+{
+	m_first = new Node<T>(item, m_first);
+
+}
+
+
 
 template<typename T>
 bool List<T>::isEmpty()
