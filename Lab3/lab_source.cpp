@@ -409,31 +409,31 @@ node<T>* node_remove(node<T>* p, int k, T& item)
 	{
 		item = p->data.popFirst();
 		if (p->data.size() == 0) {
-			node<T>* q;
-			node<T>* r;
-			if (p->left)
-			{
-				q = new node<T>(p->left->data_priority);
-				q->data.CopyList(p->left->data);
-				q->left = p->left->left;
-				q->right = p->left->right;
-			}
-			else
-			{
-				q = nullptr;
-			}
+			node<T>* q = p->left;
+			node<T>* r = p->right;
+			// if (p->left)
+			// {
+			// 	q = new node<T>(p->left->data_priority);
+			// 	q->data.CopyList(p->left->data);
+			// 	q->left = p->left->left;
+			// 	q->right = p->left->right;
+			// }
+			// else
+			// {
+			// 	q = nullptr;
+			// }
 
-			if (p->right)
-			{
-				r = new node<T>(p->right->data_priority);
-				r->data.CopyList(p->right->data);
-				r->left = p->right->left;
-				r->right = p->right->right;
-			}
-			else
-			{
-				r = nullptr;
-			}
+			// if (p->right)
+			// {
+			// 	r = new node<T>(p->right->data_priority);
+			// 	r->data.CopyList(p->right->data);
+			// 	r->left = p->right->left;
+			// 	r->right = p->right->right;
+			// }
+			// else
+			// {
+			// 	r = nullptr;
+			// }
 			
 			
 			
