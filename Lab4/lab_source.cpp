@@ -100,8 +100,21 @@ public:
 			cout << "Graph is not connected!\n";
 		sort(graph, graph + m);
 		disjoint_set ds(v - 1);
-		GraphWeighted res();
+		GraphWeighted res(v, v - 1);
 
+		for(int i = 0; i < m - 1; ++i)
+		{
+			if(!ds.same(graph[i].second.first, 
+				graph[i].second.second))
+			{
+				ds.unite(graph[i].second.first, 
+				graph[i].second.second);
+				res.setEdge(i, graph[i]);
+			}
+		}
+
+		res.printGraph();
+		return res;
 	}
 	GraphWeighted Dijkstra();
 };
