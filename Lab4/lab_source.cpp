@@ -61,7 +61,7 @@ public:
 		cout << "Input number of vertices and number of edges:\n";
 		cin >> v >> m;
 		graph = new pair<int, pair<int, int>>[m];
-		cout << "Now input all " << m << "edges in format: weight vertice1 vertice2,\n";
+		cout << "Now input all " << m << " edges in format: weight vertice1 vertice2,\n";
 		for(int i = 0; i < m; ++i)
 		{
 			int w, u, v;
@@ -74,6 +74,7 @@ public:
 	{
 		v = vertices;
 		m = edges;
+		graph = new pair<int, pair<int, int>>[m];
 	}
 
 	~GraphWeighted()
@@ -103,17 +104,18 @@ public:
 		if(m < v - 1)
 			cout << "Graph is not connected!\n";
 		sort(graph, graph + m);
-		disjoint_set ds(v - 1);
+		disjoint_set ds(v);
 		GraphWeighted res(v, v - 1);
 
-		for(int i = 0; i < m - 1; ++i)
+
+		for(int i = 0, j = 0; i < m && j < v - 1; ++i)
 		{
 			if(!ds.same(graph[i].second.first, 
 				graph[i].second.second))
 			{
 				ds.unite(graph[i].second.first, 
 				graph[i].second.second);
-				res.setEdge(i, graph[i]);
+				res.setEdge(j++, graph[i]);
 			}
 		}
 
@@ -125,5 +127,6 @@ public:
 
 int main()
 {
-	
+	GraphWeighted a;
+	a.Kruskal();
 }
