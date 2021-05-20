@@ -91,7 +91,11 @@ public:
 	}
 	void setEdge(int i, pair<int, pair<int, int>> e)
 	{
-		graph[i] = e;
+		if(i < v)
+		{
+			graph[i] = e;
+		}else cout << "Edge out of graph!\n";
+		
 	}
 
 	GraphWeighted Kruskal()
