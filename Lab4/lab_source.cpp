@@ -1,6 +1,54 @@
 #include <iostream>
 using namespace std;
 
+class disjoint_set
+{
+private:
+	int* link;
+	int* size;
+	int n;
+public:
+	disjoint_set(int len)
+	{
+		n = len;
+		link = new int[n];
+		size = new int[n];
+		for(int i = 0; i < n; ++i)
+		{
+			link[i] = i;
+			size[i] = 1;
+		}
+	}
+
+	~disjoint_set()
+	{
+		delete[] link;
+		delete[] size;
+	}
+
+	int find(int x)
+	{
+		while(x != link[x]) x = link[x];
+		return x;
+	}
+
+	bool same(int a, int b)
+	{
+		return find(a) == find(b);
+	}
+
+	void unite(int a, int b)
+	{
+		a = find(a);
+		b = find(b);
+		if(size[a] < size[b]) swap(a, b);
+		size[a] += size[b];
+		link[b] = a;
+
+	}
+	
+};
+
 class GraphWeighted
 {
 private:
