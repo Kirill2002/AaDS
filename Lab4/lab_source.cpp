@@ -24,7 +24,15 @@ public:
 	{
 		delete[] graph;
 	}
-	void printGraph();
+	void printGraph()
+	{
+		for(int i = 0; i < m; ++i)
+		{
+			cout << graph[i].first << ": "
+			<< graph[i].second.first << ' '
+			<< graph[i].second.second << '\n'; 
+		}
+	}
 	GraphWeighted Kruskal(); 
 	GraphWeighted Dijkstra();
 };
