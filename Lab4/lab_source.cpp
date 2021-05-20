@@ -81,6 +81,11 @@ public:
 			<< graph[i].second.second << '\n'; 
 		}
 	}
+	void setEdge(int i, pair<int, pair<int, int>> e)
+	{
+		graph[i] = e;
+	}
+
 	GraphWeighted Kruskal(); 
 	GraphWeighted Dijkstra();
 };
