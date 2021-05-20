@@ -20,7 +20,10 @@ public:
 			graph[i] = {w, {u, v}};
 		}
 	}
-	~GraphWeighted();
+	~GraphWeighted()
+	{
+		delete[] graph;
+	}
 	void printGraph();
 	GraphWeighted Kruskal(); 
 	GraphWeighted Dijkstra();
