@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 class disjoint_set
@@ -68,6 +69,13 @@ public:
 			graph[i] = {w, {u, v}};
 		}
 	}
+
+	GraphWeighted(int vertices, int edges)
+	{
+		v = vertices;
+		m = edges;
+	}
+
 	~GraphWeighted()
 	{
 		delete[] graph;
@@ -86,7 +94,15 @@ public:
 		graph[i] = e;
 	}
 
-	GraphWeighted Kruskal(); 
+	GraphWeighted Kruskal()
+	{
+		if(m < v - 1)
+			cout << "Graph is not connected!\n";
+		sort(graph, graph + m);
+		disjoint_set ds(v - 1);
+		GraphWeighted res();
+
+	}
 	GraphWeighted Dijkstra();
 };
 
