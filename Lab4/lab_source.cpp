@@ -57,14 +57,14 @@ public:
 class GraphWeighted
 {
 private:
-	pair<int, pair<int, int>>* graph;
+	pair<long long, pair<int, int>>* graph;
 	int v, m;
 public:
 	GraphWeighted()
 	{
 		cout << "Input number of vertices and number of edges:\n";
 		cin >> v >> m;
-		graph = new pair<int, pair<int, int>>[m];
+		graph = new pair<long long, pair<int, int>>[m];
 		cout << "Now input all " << m << " edges in format: weight vertice1 vertice2,\n";
 		for(int i = 0; i < m; ++i)
 		{
@@ -78,7 +78,7 @@ public:
 	{
 		v = vertices;
 		m = edges;
-		graph = new pair<int, pair<int, int>>[m];
+		graph = new pair<long long, pair<int, int>>[m];
 	}
 
 	~GraphWeighted()
@@ -131,7 +131,8 @@ public:
 		vector<vector<pair<int, int>>> g(v);
 		for(int i = 0; i < m; ++i)
 		{
-			int w, u, v;
+			long long w;
+			int u, v;
 			w = graph[i].first;
 			u = graph[i].second.first;
 			v = graph[i].second.second;
@@ -172,11 +173,75 @@ public:
 
 		return previous;
 	}
+
+	GraphWeighted Prim()
+	{
+		long long g[v][v];
+		for(int i = 0; i < v; ++i)
+			for (int j = 0; j < v; ++j)
+			{
+				g[i][j] = INF;
+			}
+
+		for(int i = 0; i < m; ++i)
+		{
+			int w, u, v;
+			w = graph[i].first;
+			u = graph[i].second.first;
+			v = graph[i].second.second;
+			g[u][v] = w;
+			g[v][u] = w;
+		}
+		bool used[v];
+		for(int i = 1; i < v; ++i)
+			used[v] = 0;
+		pair<long long, int> d[v];
+		for(int i = 0; i < v; ++i)
+		{
+			d[i].first = g[0][i];
+			d[i].second = 0;
+		}
+
+		int p = 0;
+		GraphWeighted res(v, v - 1);
+		for(int i = 1; i < v; ++i)
+		{
+			long long min_ind = 0;
+			for(int j = 1; j < v; ++j)
+				if(!used[j])
+					if(d[j] < d[min_ind] || min_ind == 0) 
+						min_ind = j;
+				
+			used[min_ind] = 1;
+
+			pair<long long, pair<int, int>> e = {d[min_ind].first, {d[min_ind].second, min_ind}};
+			res.setEdge(p++, e);
+
+			for(int j = 1; j < v; ++j)
+			{
+				if(g[min_ind][j] < d[j].first)
+				{
+					d[j].first = g[min_ind][j];
+					d[j].second = min_ind;
+				}
+			}
+
+		}
+
+		res.printGraph();
+		return res;
+
+	}
 };
 
 int main()
 {
 	GraphWeighted a;
+
+	cout << "Kruskal:\n";
 	a.Kruskal();
+	cout << "Dijkstra:\n";
 	a.Dijkstra(0);
+	cout << "Prim:\n";
+	a.Prim();
 }
