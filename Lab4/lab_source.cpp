@@ -1,6 +1,10 @@
 #include <iostream>
 #include <algorithm>
+#include <queue>
+#include <vector>
 using namespace std;
+
+#define INF 1000000000000000000
 
 class disjoint_set
 {
@@ -122,11 +126,57 @@ public:
 		res.printGraph();
 		return res;
 	}
-	GraphWeighted Dijkstra();
+	vector<int> Dijkstra(int start)
+	{
+		vector<vector<pair<int, int>>> g(v);
+		for(int i = 0; i < m; ++i)
+		{
+			int w, u, v;
+			w = graph[i].first;
+			u = graph[i].second.first;
+			v = graph[i].second.second;
+			g[u].push_back({w, v});
+			g[v].push_back({w, u});
+		}
+
+		priority_queue<pair<long long, int>> q;
+		vector<long long> d(v, INF);
+		q.push({0, start});
+		d[start] = 0;
+		vector<int> previous(v);
+		previous[start] = start;
+
+		while(!q.empty())
+		{
+			auto p = q.top();
+			q.pop();
+			if(-p.first > d[p.second]) continue;
+			
+			for(auto to : g[p.second])
+			{
+				if(d[p.second] + to.first < d[to.second])
+				{
+					d[to.second] = d[p.second] + to.first;
+					q.push({-d[to.second], to.second});
+					previous[to.second] = p.second;
+				}
+			}
+
+		}
+
+		for(auto el : d)
+			cout << el << ' ';
+		cout << '\n';
+
+		
+
+		return previous;
+	}
 };
 
 int main()
 {
 	GraphWeighted a;
 	a.Kruskal();
+	a.Dijkstra(0);
 }
