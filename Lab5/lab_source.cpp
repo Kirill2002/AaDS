@@ -22,6 +22,21 @@ public:
 		return last + 1 == max;
 	}
 
+	void addItem(int item)
+	{
+		if(isFull())
+		{
+			int* newArray = new int[max * 2];
+			memcpy(newArray, array, max * sizeof(int));
+			max *= 2;
+
+			delete[] array;
+
+			array = newArray;
+		}
+
+		array[last++] = item;
+	}
 
 	~List()
 	{
