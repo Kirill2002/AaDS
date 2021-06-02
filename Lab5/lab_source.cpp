@@ -15,6 +15,14 @@ public:
 		last = -1;
 		array = new int[max];
 	}
+
+
+	bool isFull()
+	{
+		return last + 1 == max;
+	}
+
+
 	~List()
 	{
 		delete[] array;
