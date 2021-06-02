@@ -35,7 +35,16 @@ public:
 			array = newArray;
 		}
 
-		array[last++] = item;
+		array[++last] = item;
+	}
+
+
+	void printList()
+	{
+		for(int i = 0; i <= last; ++i)
+		{
+			cout << array[i] << ' ';
+		}
 	}
 
 	~List()
@@ -48,5 +57,11 @@ public:
 
 int main()
 {
+	List a(2);
+	a.addItem(3);
+	a.addItem(2);
+	a.addItem(1);
+	a.printList();
+
 
 }
