@@ -15,7 +15,10 @@ public:
 		last = -1;
 		array = new int[max];
 	}
-	~List();
+	~List()
+	{
+		delete[] array;
+	}
 	
 };
 
