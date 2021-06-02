@@ -57,6 +57,19 @@ public:
 		}
 	}
 
+	int Separate()
+	{
+		int first_non_prime = 0;
+		for(int i = 0; i < last; ++i)
+		{
+			if(isPrime(array[i]))
+				swap(array[i], array[first_non_prime++]);
+		}
+
+		return first_non_prime;
+	}
+
+
 	~List()
 	{
 		delete[] array;
@@ -68,10 +81,16 @@ public:
 int main()
 {
 	List a(2);
-	a.addItem(3);
-	a.addItem(2);
-	a.addItem(1);
+
+	for(int i = 1; i < 100; i += 5)
+		a.addItem(i);
+
+	cout << "Initial list:\n";
 	a.printList();
+	cout << "\nNow lets separate prime numbers from the others\n";
+	cout << a.Separate() << " first numbers are prime\n";
+	a.printList();
+	
 
 
 }
