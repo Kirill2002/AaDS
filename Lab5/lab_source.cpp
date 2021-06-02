@@ -9,7 +9,12 @@ private:
 	int max;
 	int last;
 public:
-	List();
+	List(int m = 10)
+	{
+		max = m;
+		last = -1;
+		array = new int[max];
+	}
 	~List();
 	
 };
